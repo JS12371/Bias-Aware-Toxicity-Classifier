@@ -1,0 +1,12 @@
+Accuracy: 0.7644
+Precision (OFF, NOT): [0.88554217 0.74697755]
+Recall (OFF, NOT): [0.33409091 0.97850679]
+F1 (OFF, NOT): [0.48514851 0.84720862]
+
+False Positive Rate by Demographic:
+demographic
+AA          0.189759
+Hispanic    0.101493
+Other       0.011765
+White       0.073200
+Name: pred_label, dtype: float64

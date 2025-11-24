@@ -1,0 +1,21 @@
+Best threshold: 0.45
+Accuracy: 0.7530
+Macro F1: 0.7098
+
+              precision    recall  f1-score   support
+
+         NOT       0.79      0.85      0.82       884
+         OFF       0.65      0.55      0.60       440
+
+    accuracy                           0.75      1324
+   macro avg       0.72      0.70      0.71      1324
+weighted avg       0.75      0.75      0.75      1324
+
+
+False Positive Rate by Demographic:
+demographic
+AA          0.349398
+Hispanic    0.274627
+Other       0.017647
+White       0.240378
+Name: pred_label, dtype: float64
