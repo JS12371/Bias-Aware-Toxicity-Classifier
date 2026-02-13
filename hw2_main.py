@@ -1,6 +1,6 @@
 '''
 1684_HW2 Homework - Baseline Toxicity Classifier
-Author: Your Name
+Author: Jonah Smith
 Course: 1684
 Description: Baseline PerspectiveAPI rule-based classifier for offensive language detection.
 '''
@@ -19,7 +19,7 @@ RESULTS_DIR = os.path.join(BASE_DIR, 'results')
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 # =============================
-# 📂 Load Data
+# Load Data
 # =============================
 print("\n[1] Loading data...")
 
@@ -32,7 +32,7 @@ demo_dev = pd.read_csv(demo_dev_path, sep='\t')
 print(f"Loaded {len(dev)} dev samples and {len(demo_dev)} demographic dev samples.")
 
 # =============================
-# ⚙️ Rule-based Classification
+# Rule-based Classification
 # =============================
 print("\n[2] Running PerspectiveAPI threshold baseline...")
 
@@ -43,7 +43,7 @@ y_true = dev['label']
 y_pred = dev['pred_label']
 
 # =============================
-# 📊 Evaluation
+# Evaluation
 # =============================
 print("\n[3] Evaluating performance metrics...")
 
@@ -56,7 +56,7 @@ print(f"Recall (OFF, NOT): {recall}")
 print(f"F1 (OFF, NOT): {f1}")
 
 # =============================
-# 👥 Demographic False Positive Rate (FPR)
+# Demographic False Positive Rate (FPR)
 # =============================
 print("\n[4] Computing False Positive Rate (FPR) per demographic group...")
 
@@ -68,7 +68,7 @@ print("\nFalse Positive Rate by Demographic:")
 print(demo_fpr)
 
 # =============================
-# 💾 Save Results
+# Save Results
 # =============================
 metrics_path = os.path.join(RESULTS_DIR, 'baseline_metrics.txt')
 
@@ -80,5 +80,5 @@ with open(metrics_path, 'w') as f:
     f.write("False Positive Rate by Demographic:\n")
     f.write(str(demo_fpr))
 
-print(f"\n✅ Results saved to: {metrics_path}")
+print(f"\nResults saved to: {metrics_path}")
 print("\nNext step → Implement your Logistic Regression model (custom_logreg.py).\n")
