@@ -1,6 +1,5 @@
 '''
-1684_HW2 Homework - Logistic Regression Classifier (Optimized)
-Author: Your Name
+Author: Jonah Smith
 Course: 1684
 Description: Custom Logistic Regression classifier for offensive language detection.
 '''
@@ -24,7 +23,7 @@ RESULTS_DIR = os.path.join(BASE_DIR, 'results')
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 # =============================
-# 📂 Load Data
+# Load Data
 # =============================
 print("\n[1] Loading training and development data...")
 train_path = os.path.join(DATA_DIR, 'train.tsv')
@@ -40,7 +39,7 @@ test = pd.read_csv(test_path, sep='\t')
 print(f"Loaded {len(train)} training, {len(dev)} dev, {len(test)} test samples.")
 
 # =============================
-# ✂️ Preprocessing and Vectorization
+# Preprocessing and Vectorization
 # =============================
 print("\n[2] Vectorizing text data (TF-IDF)...")
 
@@ -49,7 +48,7 @@ vectorizer = TfidfVectorizer(
     stop_words='english',
     ngram_range=(1, 2),      # unigrams + bigrams
     max_features=20000,      # slightly larger vocab
-    sublinear_tf=True        # ✅ smoother weighting
+    sublinear_tf=True        # smoother weighting
 )
 
 X_train = vectorizer.fit_transform(train['text'])
@@ -59,13 +58,13 @@ X_dev = vectorizer.transform(dev['text'])
 y_dev = dev['label']
 
 # =============================
-# 🧠 Train Logistic Regression Model
+# Train Logistic Regression Model
 # =============================
 print("\n[3] Training Logistic Regression model...")
 
 clf = LogisticRegression(
     max_iter=1000,
-    class_weight={'NOT': 1.0, 'OFF': 1.3},  # ✅ heavier weight for OFF
+    class_weight={'NOT': 1.0, 'OFF': 1.3},  # heavier weight for OFF
     solver='liblinear'
 )
 
@@ -76,7 +75,7 @@ joblib.dump(clf, os.path.join(RESULTS_DIR, 'logreg_model.pkl'))
 joblib.dump(vectorizer, os.path.join(RESULTS_DIR, 'tfidf_vectorizer.pkl'))
 
 # =============================
-# 📊 Evaluate on dev.tsv (threshold tuning)
+# Evaluate on dev.tsv (threshold tuning)
 # =============================
 print("\n[4] Evaluating on dev.tsv...")
 
@@ -91,7 +90,7 @@ for t in [0.35, 0.4, 0.45, 0.5, 0.55]:
     if macro > best_f1:
         best_f1, best_t = macro, t
 
-print(f"\n✅ Best threshold = {best_t:.2f} → macro F1 ≈ {best_f1:.3f}")
+print(f"\nBest threshold = {best_t:.2f} → macro F1 ≈ {best_f1:.3f}")
 
 # Final predictions using best threshold
 y_pred = ['OFF' if p > best_t else 'NOT' for p in probs]
@@ -105,7 +104,7 @@ print("\nDetailed classification report:")
 print(classification_report(y_dev, y_pred))
 
 # =============================
-# 👥 Evaluate FPR on mini_demographic_dev.tsv
+# Evaluate FPR on mini_demographic_dev.tsv
 # =============================
 print("\n[5] Evaluating FPR over demographic dev set...")
 
@@ -118,7 +117,7 @@ print("\nFalse Positive Rate by Demographic:")
 print(demo_fpr)
 
 # =============================
-# 💾 Generate Predictions for test.tsv
+# Generate Predictions for test.tsv
 # =============================
 print("\n[6] Generating predictions for test.tsv...")
 
@@ -130,7 +129,7 @@ output_path = os.path.join(RESULTS_DIR, 'FirstName_LastName_test.tsv')
 test[['text', 'label']].to_csv(output_path, sep='\t', index=False)
 
 # =============================
-# 🧾 Save metrics to file
+# Save metrics to file
 # =============================
 metrics_path = os.path.join(RESULTS_DIR, 'logreg_metrics.txt')
 with open(metrics_path, 'w') as f:
@@ -141,5 +140,5 @@ with open(metrics_path, 'w') as f:
     f.write("\n\nFalse Positive Rate by Demographic:\n")
     f.write(str(demo_fpr))
 
-print(f"\n✅ Saved test predictions to {output_path}")
-print(f"✅ Metrics saved to {metrics_path}\n")
+print(f"\nSaved test predictions to {output_path}")
+print(f"Metrics saved to {metrics_path}\n")
